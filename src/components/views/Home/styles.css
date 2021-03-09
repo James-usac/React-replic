@@ -1,0 +1,49 @@
+.first_home{
+
+    background-image: url(https://assets.nflxext.com/ffe/siteui/allow-robots/contentSampling/seo-watch-free-link-preview.jpg);
+    height: 100%;
+    line-height: 2em;    
+}
+
+
+.home_izquierda{
+    position: absolute;
+    display: flex;
+	top: 0px;
+	bottom: 0px;
+	right: 0px;
+	left: 0px;
+    height: auto;
+    max-height: 40px;
+    justify-content: flex-end;
+    padding: 2% 4%;
+}
+
+.home_texto > h1{
+    color: white;
+    text-align: center;
+    font-size: 3.5em;
+}
+
+.home_texto > h2{
+    color: white;
+    text-align: center;
+    font-size: 2em;
+}
+
+.home_texto > h3{
+    color: white;
+    text-align: center;
+    font-size: 1em;
+}
+
+.temporal_home > .MuiInputBase-input, .temporal_home > label, .temporal_home > * {
+    color: white !important;
+}
+
+.home_flex{
+    display: flex;
+}
+.home_menor{
+    width: 80%;
+}

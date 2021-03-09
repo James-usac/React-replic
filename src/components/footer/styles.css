@@ -1,0 +1,36 @@
+.first-footer{
+    margin: 20px auto 0;
+    padding: 0 4%;
+    color: var(--border-color);
+    display: block;
+    overflow: hidden;
+}
+
+.member-footer-links{
+    display: block;
+}
+
+.footer_li{
+    font-size: 13px;
+    display: inline-block;
+    width: 20%;
+    margin: 0 2% 0 0;
+    list-style-type: none;
+    padding: 0 0 10px 15px;
+    cursor: pointer;
+}
+
+.social-footer{
+    display: flex;
+    padding: 0 0 10px 15px;
+}
+
+.tea_icon{
+    padding-right: 1.5%;
+}
+
+@media screen and (min-width: 481px) and (max-width: 840px) {
+	.footer_li{
+        width: 40%;
+    }
+}
