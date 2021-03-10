@@ -12,9 +12,13 @@ import {
   Typography,
 } from "@material-ui/core";
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink} from "react-router-dom";
+import { Redirect} from 'react-router';
 import { makeStyles} from '@material-ui/core/styles';
 import ExpresionRegular from "../../../Rules/ExpresionRegular";
+import useAuth from "../../../auth/useAuth";
+import { render } from "@testing-library/react";
+import { useHistory } from "react-router"
 
 
 
@@ -34,15 +38,21 @@ export const Login = () => {
 
   const [remember, setRemember] = useState(false);
   const classes = useStyles();  
-
+  const auth = useAuth();
+  let history = useHistory();
 const handleSubmit = (evt) => {
+
     evt.preventDefault();
     var result = ExpresionRegular.correo.test(email);
     if(!result){
       setErrorEmail(true);
       setLeyendaEmail('El email es incorrecto')
     }else{
-      window.location.href='/browse'
+     
+      auth.login();
+     // window.location.href='/browse'
+     history.push("/browse")
+     // 
     }
 }
 

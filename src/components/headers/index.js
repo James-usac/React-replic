@@ -5,6 +5,7 @@ import './styles.css'
 import Icons from '../../icons/icons'
 //import netflix from '../../../src/netflix.svg
 import {NavLink} from 'react-router-dom'
+import { Button } from '@material-ui/core'
 
 export const Headers = (props) => {
     var [collapse, setCollapse] = useState(false);
@@ -43,6 +44,10 @@ export const Headers = (props) => {
                     <span className="hea_icon"><Headericon  Icon={Icons.SearchIcon}></Headericon></span>
                     <span className="hea_icon"><Headericon  Icon={Icons.RedeemIcon}></Headericon></span>
                     <Headericon  Icon={Icons.NotificationsIcon}></Headericon>
+                    <Button
+                        variant="contained" 
+                        color="secondary">Logout
+                    </Button>
                 </div>
         </header>
     )
