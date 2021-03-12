@@ -4,12 +4,15 @@ import Headericon from '../headericon'
 import './styles.css'
 import Icons from '../../icons/icons'
 //import netflix from '../../../src/netflix.svg
-import {NavLink} from 'react-router-dom'
+import {NavLink, useHistory} from 'react-router-dom'
 import { Button } from '@material-ui/core'
+import useAuth from '../../auth/useAuth'
 
 export const Headers = (props) => {
     var [collapse, setCollapse] = useState(false);
- 
+    var auth = useAuth();
+    var history = useHistory();
+
     const open_slider = (e) => {
         e.preventDefault();
         var a_header = document.getElementsByClassName("a_header");
@@ -26,6 +29,11 @@ export const Headers = (props) => {
         setCollapse(!collapse);  
     }
 
+    const salir = () => {
+        auth.logout();
+        // window.location.href='/browse'
+        history.push("/login")
+    }
     
 
     return (
@@ -46,7 +54,8 @@ export const Headers = (props) => {
                     <Headericon  Icon={Icons.NotificationsIcon}></Headericon>
                     <Button
                         variant="contained" 
-                        color="secondary">Logout
+                        color="secondary"
+                        onClick={salir}>Logout
                     </Button>
                 </div>
         </header>

@@ -10,53 +10,79 @@ import {
   Card,
   Box,
   Typography,
+  InputAdornment,
+  IconButton,
 } from "@material-ui/core";
 import React, { useState } from "react";
-import { NavLink} from "react-router-dom";
-import { Redirect} from 'react-router';
-import { makeStyles} from '@material-ui/core/styles';
+import { NavLink } from "react-router-dom";
 import ExpresionRegular from "../../../Rules/ExpresionRegular";
 import useAuth from "../../../auth/useAuth";
-import { render } from "@testing-library/react";
-import { useHistory } from "react-router"
+import { useHistory, useLocation } from "react-router";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
 
+export const usuarios = [
+  {
+    id: 1,
+    user: "Naruto",
+    email: "naruto@gmail.com",
+    pass: "1234",
+  },
+  {
+    id: 2,
+    user: "Sasuke",
+    email: "sasuke@gmail.com",
+    pass: "1234",
+  },
+];
 
-
-const useStyles = makeStyles((theme) => ({
-    form: {
-      backgroundColor:"white",
-      color:"red"
-    },
-  }));
-
-
-//style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)'}}
 export const Login = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [erroremail, setErrorEmail] = useState(false);
-  const [leyendaemail, setLeyendaEmail] = useState('');
-
+  const [leyendaemail, setLeyendaEmail] = useState("");
   const [remember, setRemember] = useState(false);
-  const classes = useStyles();  
+  const [pass, setPass] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [errorpass, setErrorPass] = useState({
+    error: false,
+    leyenda: "",
+  });
+
   const auth = useAuth();
   let history = useHistory();
-const handleSubmit = (evt) => {
+  let location = useLocation();
+  const url = location.state?.from;
 
+  const handleSubmit = (evt) => {
     evt.preventDefault();
     var result = ExpresionRegular.correo.test(email);
-    if(!result){
+    if (!result) {
       setErrorEmail(true);
-      setLeyendaEmail('El email es incorrecto')
-    }else{
-     
-      auth.login();
-     // window.location.href='/browse'
-     history.push("/browse")
-     // 
+      setLeyendaEmail("El email es incorrecto");
+    } else {
+      const validate = door_login(email, pass);
+      setPass("");
+      if (validate) {
+        auth.login();
+        history.push(url || "/browse");
+      }else{
+        setErrorPass({error: true, leyenda: 'Credenciales incorrectos'})
+      }
     }
-}
+  };
 
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
+  const door_login = (email, pass) => {
+    let flat = false;
+    usuarios.forEach((elemento) => {
+      if (email === elemento.email && pass === elemento.pass) {
+        flat = true;
+      }
+    });
+    return flat;
+  };
 
   return (
     <div>
@@ -67,31 +93,31 @@ const handleSubmit = (evt) => {
           onClick={() => (window.location.href = "/")}
         ></img>
       </header>
-      <Container component="main" maxWidth="xs" variant="outlined" >
+      <Container component="main" maxWidth="xs" variant="outlined">
         <form onSubmit={handleSubmit}>
           <Card variant="outlined">
-            <CardContent >
-              <Box my={2} >
+            <CardContent>
+              <Box my={2}>
                 <Typography variant="h2">Inicia sesión</Typography>
               </Box>
-              <Box my={2} >
+              <Box my={2}>
                 <TextField
                   error={erroremail}
                   name="id_email"
                   variant="outlined"
                   required
                   fullWidth
-                  id="firstName"
+                  id="id_email"
                   label="Email o numero de telefono"
                   color="secondary"
                   helperText={leyendaemail}
-                  onChange={(e) =>{
+                  onChange={(e) => {
                     setEmail(e.target.value);
-                    if(erroremail){
+                    if (erroremail) {
                       const evaluar = ExpresionRegular.correo.test(email);
-                      if(evaluar){
-                        setLeyendaEmail('');
-                        setErrorEmail(false)
+                      if (evaluar) {
+                        setLeyendaEmail("");
+                        setErrorEmail(false);
                       }
                     }
                   }}
@@ -99,14 +125,32 @@ const handleSubmit = (evt) => {
               </Box>
               <Box my={2}>
                 <TextField
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   name="id_cont"
                   variant="outlined"
                   required
                   fullWidth
-                  id="firstName"
+                  id="id_cont"
                   label="Contraseña"
                   color="secondary"
+                  value={pass}
+                  onChange={(e) => { 
+                    setPass(e.target.value);
+                    setErrorPass({error: false, leyenda: ''})
+                   }}
+                  error={errorpass.error}
+                  helperText={errorpass.leyenda}
+                  endadornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={(e) => setShowPassword(!showPassword)}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
                 />
               </Box>
               <Box my={2}>
@@ -135,7 +179,9 @@ const handleSubmit = (evt) => {
                   />
                 </Grid>
                 <Grid item xs={4}>
-                  <NavLink className="a_header lo_a" to="/">¿Necesitas Ayuda?</NavLink>
+                  <NavLink className="a_header lo_a" to="/">
+                    ¿Necesitas Ayuda?
+                  </NavLink>
                 </Grid>
               </Grid>
             </CardContent>
