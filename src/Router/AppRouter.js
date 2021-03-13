@@ -4,6 +4,7 @@ import Home from "../components/views/Home";
 import Inicio from "../components/views/Inicio";
 import Login from "../components/views/Login";
 import Signup from "../components/views/Signup";
+import Start from "../components/views/Start";
 import PublicRouter from "./PublicRouter";
 import RoutePrivate from "./RoutePrivate";
 
@@ -24,6 +25,7 @@ export const AppRouter = () => {
     <Router>
       <Switch>
         <Route path="/about/:nombre" component={Child} />
+        <Route exact path='/start' component={Start}/>
         <PublicRouter exact path="/login" component={Login} />
         <RoutePrivate path="/browse" component={Inicio} />
         <PublicRouter path="/signup/:correo" component={Signup} />

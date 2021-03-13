@@ -1,0 +1,8 @@
+.facebox{
+    cursor: pointer;
+    border-radius: 2px;
+    transition: border 0.2s;
+}
+.facebox:hover{
+    border: 3px solid white;
+}

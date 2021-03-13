@@ -3,16 +3,14 @@ import { Button, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import Icons from "../../../icons/icons";
 import Headericon from "../../headericon";
+import Navbar from "../../Navbar";
 import "./styles.css";
 
 export const Home = () => {
   const [email, setEmail] = useState("");
   return (
     <div className="first_home">
-      <div >
-        <div className="first_header3">
-          <img className="logo" src={"assets/netflix-logo.png"}></img>
-        </div>
+      <Navbar>
         <div className="home_izquierda">
           <Button
             variant="contained"
@@ -22,7 +20,7 @@ export const Home = () => {
             Iniciar Sesion
           </Button>
         </div>
-      </div>
+      </Navbar>
       <div className="dad_signup">
           <div className="div_signup home_texto">
             <h1>
